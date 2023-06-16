@@ -1,0 +1,36 @@
+### Logs ###
+logs
+*.log
+
+### Backup package.json files created during release ###
+*.bak
+
+### Runtime data ###
+pids
+*.pid
+*.seed
+
+### NPM modules ###
+node_modules
+
+### Test coverage ###
+coverage
+
+### Custom ignores ###
+config.js
+.idea
+
+### typedoc dir ###
+docs
+
+### ide / editors ###
+.vscode
+
+### Libraries don't need locks files ###
+yarn.lock
+package-lock.json
+
+**/.openapi-generator*
+lib
+
+src/server.ts
