@@ -1,14 +1,10 @@
 import Domain from "../../base/Domain";
 import Service from "../../base/Service";
-import { Currency, CurrencyIso } from "../../interfaces";
-import { isAddress } from "web3-utils";
 import { URL } from "url";
 import { isValidUUID } from "../../base/util";
 
 export interface PaymentIntentCreateOptions {
-  walletAddress: string;
   amount: number;
-  currency: CurrencyIso;
   metadata?: Object;
   successUrl: string;
   failureUrl: string;
@@ -19,9 +15,8 @@ export interface PaymentIntentInstance {
   id: string;
   walletAddress: string;
   amount: number;
-  currency: Currency;
   link: string;
-  metadata?: Object;
+  metadata?: any;
   state: string;
   createdAt: string;
   paidAt: string;
@@ -47,21 +42,8 @@ export default class Payment extends Service {
       throw new Error('Required parameter "params" missing.');
     }
 
-    if (
-      params["walletAddress"] === null ||
-      params["walletAddress"] === undefined
-    ) {
-      throw new Error(
-        "Required parameter \"params['walletAddress']\" missing."
-      );
-    }
-
     if (params["amount"] === null || params["amount"] === undefined) {
       throw new Error("Required parameter \"params['amount']\" missing.");
-    }
-
-    if (params["currency"] === null || params["currency"] === undefined) {
-      throw new Error("Required parameter \"params['currency']\" missing.");
     }
 
     if (params["successUrl"] === null || params["successUrl"] === undefined) {
@@ -74,14 +56,6 @@ export default class Payment extends Service {
 
     if (params["label"] === null || params["label"] === undefined) {
       throw new Error("Required parameter \"params['label']\" missing.");
-    }
-
-    if (!isAddress(params["walletAddress"].replace("Bx", ""))) {
-      throw new Error("Invalid wallet adresss.");
-    }
-
-    if (typeof params["currency"] !== "string") {
-      throw new Error("Invalid currency, required a string.");
     }
 
     if (typeof params["amount"] !== "number") {

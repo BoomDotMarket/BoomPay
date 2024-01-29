@@ -11,7 +11,7 @@ export interface Currency {
 
 
 export type CurrencyIso =
-  | "EMTCN"
+  | "BMC"
   | "EUR"
   | "USD"
   | "GBP"

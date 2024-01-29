@@ -14,26 +14,16 @@ app.post('/payment/:productId', async (req, res) => {
 
   const customerId = 'XXXX-XXXX'
 
-  let wallet
   let payment
-  try {
-    // Create a new wallet
-    wallet = await boomPay.wallets.createWallet({
-      currency: 'EMTCN',
-    });
-  } catch (error) {
-    console.error('Error creating wallet:', error);
-    res.status(500).send("Unvailable")
-  }
 
   try {
     // Create a new payment intent
     payment = await boomPay.payments.createIntent({
       walletAddress: wallet.address,
       amount: 5,  // Adjust amount as needed
-      currency: 'EMTCN',
+      currency: 'BMC',
       successUrl: 'https://your-success-url.com/success',  // Replace with actual success URL
-      failureUrl: 'https://your-failure-url.com/success',  // Replace with actual failure URL
+      failureUrl: 'https://your-failure-url.com/failure',  // Replace with actual failure URL
       metadata: {
         productId: productId,
         customerId: customerId

@@ -3,7 +3,7 @@
 BoomPay SDK is a powerful library allowing developers to interact seamlessly with the BoomPay API. The key features encompassed by this SDK include:
 
 - Payment intent creation and retrieval
-- Wallet creation and retrieval
+- Default Wallet retrieval
 - Convenient Webhook integration
 
 The SDK is built to support both TypeScript and JavaScript.
@@ -35,25 +35,16 @@ const boomPay = new BoomPay({
 
 ### Create a Wallet
 
-Create a new wallet specifying the currency:
-
-```javascript
-const wallet = await boomPay.wallets.createWallet({
-  currency: 'EMTCN',
-});
-
-console.log(wallet);
-```
+Wallets are now created on the Boom App. You can download it [here](https://boom.market/dl). Once created this will be the wallet which is tied to your API Key hence you won't need to specify the wallet address on API requests.
 
 ### Create a Payment Intent
 
-Create a new payment intent by specifying the wallet address, amount, currency, URLs for success and failure scenarios, additional metadata, and a label:
+Create a new payment intent by specifying the amount, URLs for success and failure scenarios, additional metadata, and a label:
 
 ```javascript
 const payment = await boomPay.payments.createIntent({
-  walletAddress: wallet.address,
   amount: 5,
-  currency: 'EMTCN',
+  currency: 'BMC',
   successUrl: 'https://your-success-url.com',
   failureUrl: 'https://your-failure-url.com',
   metadata: {
@@ -73,16 +64,6 @@ Retrieve details of a specific payment using its ID:
 const payment = await boomPay.payments.getPayment('payment-id');
 
 console.log(payment);
-```
-
-### Retrieve a Wallet
-
-Retrieve details of a specific wallet using its address:
-
-```javascript
-const wallet = await boomPay.wallets.getWallet('wallet-address');
-
-console.log(wallet);
 ```
 
 ### Retrieve the Default Wallet
@@ -115,11 +96,9 @@ Ensure you handle exceptions for each function as they would throw an Error if t
 
 ```javascript
 try {
-  const wallet = await boomPay.wallets.createWallet({
-    currency: 'EMTCN',
-  });
+  const wallet = await boomPay.wallets.getDefaultWallet();
 } catch (error) {
-  console.error('Error creating wallet:', error);
+  console.error('Error getting default wallet:', error);
 }
 ```
 
@@ -129,16 +108,16 @@ The SDK offers a sandbox mode to aid testing. Enable it by setting the `sandbox`
 
 ```javascript
 const boomPay = new BoomPay({
-  apiKey: 'your-api-key',
+  apiKey: 'your-sandbox-api-key',
   sandbox: true, // Enable sandbox mode
 });
 ```
 
 ## Supported Currencies
 
-The SDK supports the following currencies:
+The SDK supports only Boomcoin (BMC) and as such there is no need to specify the currency when creating a payment intent.
 
-- EMTCN
+<!-- - BMC
 - EUR
 - USD
 - GBP
@@ -152,10 +131,10 @@ The SDK supports the following currencies:
 - BRL
 - MAD
 - TRY
-- ILS
+- ILS 
 
 You can specify the currency as a string when creating a wallet or a payment intent.
-
+-->
 ## TypeScript Support
 
 TypeScript definitions for all types and interfaces are included. Simply import `BoomPay` from `boompay-sdk`:
